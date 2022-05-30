@@ -1,7 +1,7 @@
 import Table from "react-bootstrap/Table";
 import AddItemAdmin from "../add_item_admin/add_item_admin";
 import DeleteItemAdmin from "../delete_item_admin/delete_item_admin";
-import "bootstrap/dist/css/bootstrap.css";
+import EditItemAdmin from "../edit_item_admin/edit_item_admin";
 import "./admin_table.css";
 
 export default function AdminTable() {
@@ -48,6 +48,13 @@ export default function AdminTable() {
                   </td>
                 ))}
                 <td>
+                  <EditItemAdmin
+                    itemId={item.id}
+                    itemName={item.name}
+                    itemDescription={item.description}
+                    itemPrice={item.price}
+                    itemImageLink={item.image}
+                  />
                   <DeleteItemAdmin itemId={item.id} itemName={item.name} />
                 </td>
               </tr>

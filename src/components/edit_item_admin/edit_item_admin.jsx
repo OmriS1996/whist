@@ -8,13 +8,14 @@ import ModalBody from "react-bootstrap/ModalBody";
 import ModalFooter from "react-bootstrap/ModalFooter";
 import Feedback from "react-bootstrap/Feedback";
 
-export default function AddItemAdmin() {
+export default function EditItemAdmin(props) {
   const [show, setShow] = useState(false);
   const [validated, setValidated] = useState(false);
-  const [itemName, setItemName] = useState("");
-  const [itemDescription, setItemDescription] = useState("");
-  const [itemPrice, setItemPrice] = useState("");
-  const [itemImageLink, setItemImageLink] = useState("");
+  const [itemId, setItemId] = useState(props.itemId);
+  const [itemName, setItemName] = useState(props.itemName);
+  const [itemDescription, setItemDescription] = useState(props.itemDescription);
+  const [itemPrice, setItemPrice] = useState(props.itemPrice);
+  const [itemImageLink, setItemImageLink] = useState(props.itemImageLink);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -26,12 +27,12 @@ export default function AddItemAdmin() {
       event.preventDefault();
       event.stopPropagation();
     }
-
     setValidated(true);
   };
 
   function formChecker() {
     let itemObj = {
+      itemId: itemId,
       itemName: itemName,
       itemDescription: itemDescription,
       itemPrice: itemPrice,
@@ -47,7 +48,7 @@ export default function AddItemAdmin() {
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Add Item
+        Edit Item
       </Button>
 
       <Modal show={show} onHide={handleClose} centered>
@@ -64,6 +65,7 @@ export default function AddItemAdmin() {
                 type="text"
                 placeholder="Item Name"
                 autoFocus
+                defaultValue={itemName}
               />
               <Form.Control.Feedback type="invalid">
                 Please Insert Item Name
@@ -76,6 +78,7 @@ export default function AddItemAdmin() {
                 required
                 as="textarea"
                 rows={2}
+                defaultValue={itemDescription}
               />
               <Form.Control.Feedback type="invalid">
                 Please Add Item Description
@@ -90,6 +93,7 @@ export default function AddItemAdmin() {
                 min="0"
                 placeholder="$"
                 autoFocus
+                defaultValue={itemPrice}
               />
               <Form.Control.Feedback type="invalid">
                 Please Specify Price
@@ -103,6 +107,7 @@ export default function AddItemAdmin() {
                 type="text"
                 placeholder="Paste Link Here"
                 autoFocus
+                defaultValue={itemImageLink}
               />
               <Form.Control.Feedback type="invalid">
                 Please Link to Item Image

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import "bootstrap/dist/css/bootstrap.css";
 
 export default function DeleteItemAdmin(props) {
   const [show, setShow] = useState(false);
