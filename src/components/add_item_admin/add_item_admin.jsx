@@ -1,12 +1,8 @@
 import Button from "react-bootstrap/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import ModalDialog from "react-bootstrap/ModalDialog";
-import ModalHeader from "react-bootstrap/ModalHeader";
-import ModalBody from "react-bootstrap/ModalBody";
-import ModalFooter from "react-bootstrap/ModalFooter";
-import Feedback from "react-bootstrap/Feedback";
+import { PostProduct } from "../../lib/api_calls/api_calls";
 
 export default function AddItemAdmin() {
   const [show, setShow] = useState(false);
@@ -15,33 +11,51 @@ export default function AddItemAdmin() {
   const [itemDescription, setItemDescription] = useState("");
   const [itemPrice, setItemPrice] = useState("");
   const [itemImageLink, setItemImageLink] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    setValidated(false);
+  };
   const handleShow = () => setShow(true);
 
   const handleSubmit = (event) => {
+    setLoading(true);
     const form = event.currentTarget;
 
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
-
     setValidated(true);
+
+    let formComplete = false;
+
+    let itemObj = {
+      name: itemName,
+      description: itemDescription,
+      price: itemPrice,
+      image: itemImageLink,
+    };
+
+    formComplete = formChecker(itemObj, formComplete);
+    if (formComplete === true) {
+      PostProduct(itemObj);
+      setShow(false);
+    }
+
+    setLoading(false);
   };
 
-  function formChecker() {
-    let itemObj = {
-      itemName: itemName,
-      itemDescription: itemDescription,
-      itemPrice: itemPrice,
-      itemImageLink: itemImageLink,
-    };
-    Object.keys(itemObj).map((objKey, index) => {
-      if (itemObj[objKey].length > 0 && itemObj.itemPrice >= 0) {
-        console.log(itemObj);
+  function formChecker(obj, formBoolean) {
+    Object.keys(obj).map((objKey, index) => {
+      if (obj[objKey].length > 0 && obj.price >= 0) {
+        return (formBoolean = true);
+      } else {
+        return (formBoolean = false);
       }
     });
+    return formBoolean;
   }
 
   return (
@@ -114,8 +128,13 @@ export default function AddItemAdmin() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" type="submit" onClick={handleSubmit}>
-            Save Changes
+          <Button
+            disabled={loading}
+            variant="primary"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            {loading ? "Sending..." : "Save Changes"}
           </Button>
         </Modal.Footer>
       </Modal>

@@ -1,29 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ItemCard from "../../components/item_card/item_card";
+import { GetPorducts } from "../../lib/api_calls/api_calls";
 
 export default function Home(props) {
-  const [mocData, setMocData] = useState([
-    {
-      id: 1,
-      name: "Nutella",
-      description: "750g hazelnut spread with cocoa",
-      price: 5,
-      image:
-        "https://cdnx.jumpseller.com/hercules-it-llc/image/17110157/Nutella.jpg?1623999446",
-    },
-  ]);
+  const [loading, setLoading] = useState(false);
+  const [dataArray, setDataArray] = useState([]);
+
+  async function getApi() {
+    setLoading(true);
+    let response = await GetPorducts();
+    if (response.length > 0) {
+      setDataArray(response);
+    }
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    getApi();
+  }, []);
+
   return (
     <div>
-      {mocData.map((item) => (
-        <ItemCard
-          key={item.id}
-          itemId={item.id}
-          itemName={item.name}
-          itemDescription={item.description}
-          itemPrice={item.price}
-          itemImage={item.image}
-        />
-      ))}
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        dataArray.map((item) => (
+          <ItemCard
+            key={item.product_id}
+            itemId={item.product_id}
+            itemName={item.product_name}
+            itemDescription={item.product_description}
+            itemPrice={item.product_price}
+            itemImage={item.product_image}
+          />
+        ))
+      )}
     </div>
   );
 }

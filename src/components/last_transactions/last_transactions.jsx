@@ -1,20 +1,42 @@
+import { useEffect, useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
+import { GetTransactions } from "../../lib/api_calls/api_calls";
 
 export default function LastTransactions(props) {
-  const mocData = [{ id: 1, date: 1653923953953, totalUsd: 1500 }];
+  const [dataArray, setDataArray] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  async function getApi() {
+    setLoading(true);
+    let response = await GetTransactions();
+    if (response.length > 0) {
+      setDataArray(response);
+    }
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    getApi();
+  }, []);
+
   return (
     <div>
       <h4>Transactions from the last 5 days</h4>
-      <ListGroup as="ol" numbered>
-        {mocData.map((item) => {
-          return (
-            <ListGroup.Item key={item.id} as="li">
-              Date: <strong>{new Date(item.date).toLocaleString()}</strong>,
-              Amount: <strong>{item.totalUsd}$</strong>
-            </ListGroup.Item>
-          );
-        })}
-      </ListGroup>
+      {dataArray.length > 0 ? (
+        <ListGroup as="ol" numbered>
+          {dataArray.map((item) => {
+            return (
+              <ListGroup.Item key={item.transaction_id} as="li">
+                Date:{" "}
+                <strong>{new Date(item.unix_date).toLocaleString()}</strong>,
+                Amount: <strong>{item.transaction_usd}$</strong>
+              </ListGroup.Item>
+            );
+          })}
+        </ListGroup>
+      ) : (
+        <div>{loading ? "loading" : "No transactions"}</div>
+      )}
     </div>
   );
 }

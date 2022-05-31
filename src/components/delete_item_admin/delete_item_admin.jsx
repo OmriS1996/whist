@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { DeleteProduct } from "../../lib/api_calls/api_calls";
 
 export default function DeleteItemAdmin(props) {
   const [show, setShow] = useState(false);
@@ -11,8 +12,7 @@ export default function DeleteItemAdmin(props) {
 
   function handleDelete() {
     setIsLoading(true);
-    //insert delete api here with item id
-    console.log(props.itemId);
+    DeleteProduct(props.itemId);
     setIsLoading(false);
     handleClose();
   }
