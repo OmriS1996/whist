@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ItemCard from "../../components/item_card/item_card";
 import { GetPorducts } from "../../lib/api_calls/api_calls";
+import "./home.css";
 
 export default function Home(props) {
   const [loading, setLoading] = useState(false);
@@ -20,7 +21,7 @@ export default function Home(props) {
   }, []);
 
   return (
-    <div>
+    <div className="homePage">
       {loading ? (
         <div>Loading...</div>
       ) : (

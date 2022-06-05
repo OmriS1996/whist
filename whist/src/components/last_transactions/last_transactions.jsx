@@ -24,12 +24,11 @@ export default function LastTransactions(props) {
       <h4>Transactions from the last 5 days</h4>
       {dataArray.length > 0 ? (
         <ListGroup as="ol" numbered>
-          {dataArray.map((item) => {
+          {dataArray.map((item, index) => {
             return (
-              <ListGroup.Item key={item.transaction_id} as="li">
-                Date:{" "}
-                <strong>{new Date(item.unix_date).toLocaleString()}</strong>,
-                Amount: <strong>{item.transaction_usd}$</strong>
+              <ListGroup.Item key={index} as="li">
+                Date: <strong>{item.created}</strong>, Amount:{" "}
+                <strong>{item.total}$</strong>
               </ListGroup.Item>
             );
           })}

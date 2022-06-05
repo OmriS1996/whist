@@ -2,7 +2,7 @@ import axios from "axios";
 
 export function PostProduct(productObj) {
   axios
-    .post(`http://localhost:4000/products/new`, productObj)
+    .post(`api/products/new`, productObj)
     .then(function (response) {
       return response;
     })
@@ -13,7 +13,7 @@ export function PostProduct(productObj) {
 
 export function PutProduct(productObj, productId) {
   axios
-    .put(`http://localhost:4000/products/update/${productId}`, productObj)
+    .put(`api/products/update/${productId}`, productObj)
     .then(function (response) {
       return response;
     })
@@ -24,7 +24,7 @@ export function PutProduct(productObj, productId) {
 
 export function DeleteProduct(productId) {
   axios
-    .delete(`http://localhost:4000/products/delete/${productId}`)
+    .delete(`api/products/delete/${productId}`)
     .then(function (response) {
       return response;
     })
@@ -35,7 +35,7 @@ export function DeleteProduct(productId) {
 
 export function GetPorducts() {
   let answer = axios
-    .get(`http://localhost:4000/products/get`)
+    .get(`api/products/get`)
     .then(function (response) {
       return response.data;
     })
@@ -48,7 +48,7 @@ export function GetPorducts() {
 
 export function PostPurchase(purchaseArray) {
   axios
-    .post(`http://localhost:4000/transactions/purchase`, purchaseArray)
+    .post(`api/transactions/purchase`, purchaseArray)
     .then(function (response) {
       return response;
     })
@@ -59,7 +59,7 @@ export function PostPurchase(purchaseArray) {
 
 export function GetTransactions() {
   let answer = axios
-    .get(`http://localhost:4000/transactions/fivedays`)
+    .get(`api/transactions/fivedays`)
     .then(function (response) {
       return response.data;
     })
@@ -72,7 +72,7 @@ export function GetTransactions() {
 
 export function GetTopUnique() {
   let answer = axios
-    .get(`http://localhost:4000/stats/gettopunique`)
+    .get(`api/stats/gettopunique`)
     .then(function (response) {
       return response.data;
     })
@@ -85,7 +85,7 @@ export function GetTopUnique() {
 
 export function GetTopTotal() {
   let answer = axios
-    .get(`http://localhost:4000/stats/gettoptotal`)
+    .get(`api/stats/gettoptotal`)
     .then(function (response) {
       return response.data;
     })

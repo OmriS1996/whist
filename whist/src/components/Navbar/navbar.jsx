@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import Cart from "../cart/cart";
+import { useContext } from "react";
+import { StoreContext } from "../../App";
 
 export default function NavbarComponent(props) {
+  const [storeArray, setStoreArray] = useContext(StoreContext);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <a className="navbar-brand" href="#">
@@ -39,7 +43,7 @@ export default function NavbarComponent(props) {
           <li className="nav-item dropdown justify-content-end">
             <Dropdown size="lg" className="d-inline mx-2" autoClose={false}>
               <Dropdown.Toggle id="dropdown-autoclose-false">
-                Cart
+                Cart {storeArray.length}
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
